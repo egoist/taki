@@ -10,6 +10,11 @@
   "files": [
     "lib"
   ],
+  "keywords": [
+    "snapshot",
+    "prerender",
+    "crawler"
+  ],
   "scripts": {
     "test": "ava && npm run lint",
     "lint": "xo"
