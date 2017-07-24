@@ -1,0 +1,33 @@
+{
+  "name": "taki",
+  "version": "0.0.0",
+  "description": "Take a snapshot of any website.",
+  "repository": {
+    "url": "egoist/taki",
+    "type": "git"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "ava && npm run lint",
+    "lint": "xo"
+  },
+  "author": "egoist <0x142857@gmail.com>",
+  "license": "MIT",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "jsdom": "^9"
+  },
+  "devDependencies": {
+    "ava": "^0.21.0",
+    "eslint-config-rem": "^3.0.0",
+    "xo": "^0.18.0"
+  },
+  "xo": {
+    "extends": "rem/prettier"
+  }
+}
