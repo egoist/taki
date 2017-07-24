@@ -16,11 +16,9 @@ const taki = require('taki')
 // Prerender this page to static HTML
 // Wait for 1s since this page renders remote markdown file
 taki({ url: 'https://sao.js.org', wait: 1000 })
-.then(result => {
-  // window object of target url
-  console.log(result.window)
+.then(html => {
   // serialized html string of target url
-  console.log(result.html)
+  console.log(html)
 })
 ```
 
