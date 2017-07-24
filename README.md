@@ -22,15 +22,23 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
 })
 ```
 
-### Manually set ready state
+### Manually take snapshot
 
-If you have control of the website you want to prerender, you can manually call `window.snapshot()` to tell `taki` that your async web page is ready:
+By default **taki** will take a snapshot of the URL in a specific timeout (50 by default) when all resource are loaded, if you have control of the website's source code, you can disable that and manually call `window.snapshot`:
 
 ```js
-// In your app:
+taki({
+  url: 'http://my-web.com',
+  manually: true
+})
+```
+
+And in your website's source code:
+
+```diff
 fetchSomeData().then(data => {
   this.setState({ data }, () => {
-    window.snapshot && window.snapshot()
++    window.snapshot && window.snapshot()
   })
 })
 ```
