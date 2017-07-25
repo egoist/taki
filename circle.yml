@@ -3,8 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:latest
-      - image: selenium/standalone-chrome:3.1.0
+      - image: circleci/node:latest-browsers
     branches:
       ignore:
         - gh-pages # list of branches to ignore
