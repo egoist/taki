@@ -1,6 +1,6 @@
 {
   "name": "taki",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Take a snapshot of any website.",
   "repository": {
     "url": "egoist/taki",
