@@ -20,7 +20,10 @@ test('jsdom:wait', async t => {
 
 test('jsdom:multiple urls', async t => {
   const html = await taki({
-    url: ['http://elm-spa-example.gizra.com/', 'http://elm-spa-example.gizra.com/'],
+    url: [
+      'http://elm-spa-example.gizra.com/',
+      'http://elm-spa-example.gizra.com/'
+    ],
     wait: 1000
   })
 
@@ -52,7 +55,7 @@ test.serial('chrome:wait for selector', async t => {
     wait: '#motivation'
   })
 
-  t.snapshot(html)
+  t.regex(html, /Motivation/)
 })
 
 test.serial('chrome:multiple urls', async t => {
