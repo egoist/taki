@@ -22,6 +22,16 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
 })
 ```
 
+### Multiplate URLs
+
+```js
+taki({
+  url: ['https://sao.js.org', 'https://sao.js.org/#/create']
+}).then(result => {
+  // Then the result will an array of html string
+})
+```
+
 ### Choose a browser
 
 Can be eithor `jsdom` (default) or `chrome`.
