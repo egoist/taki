@@ -60,7 +60,7 @@ test.serial('chrome:wait for selector', async t => {
 
 test.serial('chrome:multiple urls', async t => {
   const html = await taki({
-    url: ['https://sao.js.org', 'https://docute.js.org'],
+    url: ['https://sao.js.org', 'https://docute.js.org/#/home'],
     browser: 'chrome',
     wait: 3000
   })
