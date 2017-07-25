@@ -37,8 +37,6 @@ taki({
 
 ### Manually take snapshot
 
-*Only for `browser: 'jsom'`*
-
 By default **taki** will take a snapshot of the URL in a specific timeout (50 by default) when all resource are loaded, if you have control of the website's source code, you can disable that and manually call `window.snapshot`:
 
 ```js
