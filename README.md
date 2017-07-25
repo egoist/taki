@@ -22,7 +22,22 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
 })
 ```
 
+### Choose a browser
+
+Can be eithor `jsdom` (default) or `chrome`.
+
+When you choose `chrome` it will prefer `chromium` if it's also installed.
+
+```js
+taki({
+  url,
+  browser: 'chrome'
+})
+```
+
 ### Manually take snapshot
+
+*Only for `browser: 'jsom'`*
 
 By default **taki** will take a snapshot of the URL in a specific timeout (50 by default) when all resource are loaded, if you have control of the website's source code, you can disable that and manually call `window.snapshot`:
 
@@ -43,7 +58,23 @@ fetchSomeData().then(data => {
 })
 ```
 
+### Wait
+
+Wait for specific timeout or a CSS selector to appera in dom.
+
+```js
+taki({
+  url,
+  // Wait for 3000 ms
+  wait: 3000,
+  // Or wait for <div class="comments"></div> to appear
+  wait: '.comments'
+})
+```
+
 ### Resource filter
+
+*Only for `browser: 'jsom'`*
 
 By default we fetch all resources in `script` tag, but you can control which should be excluded:
 
@@ -65,7 +96,7 @@ See the *resource* definition [here](https://github.com/tmpvar/jsdom/blob/master
 
 ### Canvas support
 
-Install [canvas](https://npm.im/canvas) or [canvas-prebuilt](https://npm.im/canvas-prebuilt) alongside *taki*.
+It's supported natively in `chrome`, but if you want to use it in `jsdom`, please install [canvas](https://npm.im/canvas) or [canvas-prebuilt](https://npm.im/canvas-prebuilt) alongside *taki*.
 
 ## Contributing
 
