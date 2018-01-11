@@ -8,6 +8,8 @@
 npm i taki
 ```
 
+Built on the top of Google's [Puppeteer](https://github.com/GoogleChrome/puppeteer), for a jsdom/chromy version please visit [here](https://github.com/egoist/taki/tree/jsdom-chromy).
+
 ## Usage
 
 ```js
