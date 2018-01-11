@@ -81,7 +81,7 @@ taki({
 })
 ```
 
-This option will be ignored if [manually](#manually) is set.
+This option will be ignored if [manually](#manually-take-snapshot) is set.
 
 ## Contributing
 
