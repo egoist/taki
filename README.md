@@ -5,7 +5,7 @@
 ## Install
 
 ```bash
-yarn add taki
+npm i taki
 ```
 
 ## Usage
