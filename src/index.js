@@ -1,11 +1,9 @@
 import puppeteer from 'puppeteer'
 
-async function getHTML(browser, { url, wait, manually }) {
+async function getHTML(browser, { url, wait = 50, manually }) {
   const page = await browser.newPage()
   await page.goto(url)
-  if (wait) {
-    await page.waitFor(wait)
-  } else if (manually) {
+  if (manually) {
     await page.evaluate(() => {
       return new Promise(resolve => {
         // eslint-disable-next-line no-undef
@@ -16,6 +14,8 @@ async function getHTML(browser, { url, wait, manually }) {
         ] = resolve
       })
     })
+  } else {
+    await page.waitFor(wait)
   }
   return page.content()
 }

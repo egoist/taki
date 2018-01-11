@@ -69,7 +69,7 @@ Then call `window.iamready()` instead of `window.snapshot()` in your app.
 
 ### Wait
 
-Wait for specific timeout or a CSS selector to appera in dom.
+Wait for specific timeout or a CSS selector to appear in dom, defaults to `50`.
 
 ```js
 taki({
@@ -80,6 +80,8 @@ taki({
   wait: '.comments'
 })
 ```
+
+This option will be ignored if [manually](#manually) is set.
 
 ## Contributing
 
