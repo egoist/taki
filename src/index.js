@@ -22,11 +22,14 @@ async function getHTML(browser, { url, wait = 50, manually }) {
 
 export default async function (options) {
   const browser = await puppeteer.launch()
-
-  const result = Array.isArray(options) ?
-    await Promise.all(options.map(option => getHTML(browser, option))) :
-    await getHTML(browser, options)
-
-  await browser.close()
-  return result
+  try {
+    const result = Array.isArray(options) ?
+      await Promise.all(options.map(option => getHTML(browser, option))) :
+      await getHTML(browser, options)
+    await browser.close()
+    return result
+  } catch (err) {
+    await browser.close()
+    throw err
+  }
 }
