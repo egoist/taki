@@ -6,9 +6,9 @@
     "url": "egoist/taki",
     "type": "git"
   },
-  "main": "lib/index.js",
+  "main": "dist/taki.js",
   "files": [
-    "lib"
+    "dist"
   ],
   "keywords": [
     "snapshot",
@@ -16,8 +16,10 @@
     "crawler"
   ],
   "scripts": {
-    "test": "ava && npm run lint",
-    "lint": "xo"
+    "test": "npm run lint && ava",
+    "lint": "xo",
+    "prepublishOnly": "npm run build",
+    "build": "bili --filename taki.js --buble.target.node 6"
   },
   "author": "egoist <0x142857@gmail.com>",
   "license": "MIT",
@@ -25,19 +27,35 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "chromy": "^0.3.6",
-    "jsdom": "^9",
-    "promise.series": "^0.2.0"
+    "puppeteer": "^0.13.0"
   },
   "devDependencies": {
     "ava": "^0.21.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "bili": "^1.4.2",
     "eslint-config-rem": "^3.0.0",
     "xo": "^0.18.0"
   },
   "xo": {
-    "extends": "rem/prettier",
-    "envs": [
-      "browser"
+    "extends": "rem"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
     ]
   }
 }

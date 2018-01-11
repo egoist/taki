@@ -25,23 +25,11 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
 ### Multiplate URLs
 
 ```js
-taki({
-  url: ['https://sao.js.org', 'https://sao.js.org/#/create']
-}).then(result => {
+taki([
+  { url: 'https://sao.js.org' }, 
+  { url: 'https://sao.js.org/#/create' }  
+]).then(result => {
   // Then the result will an array of html string
-})
-```
-
-### Choose a browser
-
-Can be eithor `jsdom` (default) or `chrome`.
-
-When you choose `chrome` it will prefer `chromium` if it's also installed.
-
-```js
-taki({
-  url,
-  browser: 'chrome'
 })
 ```
 
@@ -66,6 +54,17 @@ fetchSomeData().then(data => {
 })
 ```
 
+Alternatively, choose your own method to invoke when your app is ready to return HTML:
+
+```js
+taki({
+  url: 'http://my-web.com',
+  manually: 'iamready'
+})
+```
+
+Then call `window.iamready()` instead of `window.snapshot()` in your app.
+
 ### Wait
 
 Wait for specific timeout or a CSS selector to appera in dom.
@@ -79,32 +78,6 @@ taki({
   wait: '.comments'
 })
 ```
-
-### Resource filter
-
-*Only for `browser: 'jsom'`*
-
-By default we fetch all resources in `script` tag, but you can control which should be excluded:
-
-```js
-const URL = require('url')
-
-const url = 'http://example-website.com'
-
-taki({
-  url,
-  resourceFilter(resource) {
-    // Only fetch resources from the same host
-    return resource.url.host === URL.parse(url).host
-  }
-})
-```
-
-See the *resource* definition [here](https://github.com/tmpvar/jsdom/blob/master/lib/old-api.md#custom-external-resource-loader).
-
-### Canvas support
-
-It's supported natively in `chrome`, but if you want to use it in `jsdom`, please install [canvas](https://npm.im/canvas) or [canvas-prebuilt](https://npm.im/canvas-prebuilt) alongside *taki*.
 
 ## Contributing
 
@@ -120,4 +93,4 @@ It's supported natively in `chrome`, but if you want to use it in `jsdom`, pleas
 **taki** © [egoist](https://github.com/egoist), Released under the [MIT](./LICENSE) License.<br>
 Authored and maintained by egoist with help from contributors ([list](https://github.com/egoist/taki/contributors)).
 
-> [egoist.moe](https://egoist.moe) · GitHub [@egoist](https://github.com/egoist) · Twitter [@rem_rin_rin](https://twitter.com/rem_rin_rin)
+> [egoist.moe](https://egoist.moe) · GitHub [@egoist](https://github.com/egoist) · Twitter [@_egoistlily](https://twitter.com/_egoistlily)
