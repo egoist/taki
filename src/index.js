@@ -3,11 +3,11 @@ import minifier from 'html-minifier'
 
 async function getHTML(
   browser,
-  { url, wait = 50, manually, onFetch, onFetched, minify }
+  { url, wait, manually, onFetch, onFetched, minify }
 ) {
   onFetch && onFetch(url)
   const page = await browser.newPage()
-  await page.goto(url)
+  await page.goto(url, { waitUntil: 'networkidle2' })
   if (manually) {
     await page.evaluate(() => {
       return new Promise(resolve => {
@@ -15,7 +15,7 @@ async function getHTML(
         window[typeof manually === 'string' ? manually : 'snapshot'] = resolve
       })
     })
-  } else {
+  } else if (wait) {
     await page.waitFor(wait)
   }
   const html = await page.content()

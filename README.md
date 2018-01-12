@@ -37,7 +37,7 @@ taki([
 
 ### Manually take snapshot
 
-By default **taki** will take a snapshot of the URL in a specific timeout (50 by default) when all resource are loaded, if you have control of the website's source code, you can disable that and manually call `window.snapshot`:
+By default **taki** will take a snapshot of the URL when all resources are loaded, if you have control of the website's source code, you can disable that and manually call `window.snapshot`:
 
 ```js
 taki({
@@ -69,7 +69,7 @@ Then call `window.iamready()` instead of `window.snapshot()` in your app.
 
 ### Wait
 
-Wait for specific timeout or a CSS selector to appear in dom, defaults to `50`.
+Wait for specific timeout or a CSS selector to appear in dom.
 
 ```js
 taki({
