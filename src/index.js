@@ -7,7 +7,7 @@ async function getHTML(
 ) {
   onFetch && onFetch(url)
   const page = await browser.newPage()
-  await page.goto(url, { waitUntil: 'networkidle2' })
+  await page.goto(url, { waitUntil: manually ? 'domcontentloaded' : 'networkidle2' })
   if (manually) {
     await page.evaluate(() => {
       return new Promise(resolve => {
