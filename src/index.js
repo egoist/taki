@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer'
 
-async function getHTML(browser, { url, wait = 50, manually }) {
+async function getHTML(browser, { url, wait = 50, manually, onFetch, onFetched }) {
+  onFetch && onFetch(url)
   const page = await browser.newPage()
   await page.goto(url)
   if (manually) {
@@ -17,7 +18,9 @@ async function getHTML(browser, { url, wait = 50, manually }) {
   } else {
     await page.waitFor(wait)
   }
-  return page.content()
+  const html = await page.content()
+  onFetched && onFetched(url)
+  return html
 }
 
 export default async function (options) {
