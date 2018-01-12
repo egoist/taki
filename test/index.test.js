@@ -8,6 +8,14 @@ test('main', async t => {
   t.snapshot(html)
 })
 
+test('minify', async t => {
+  const html = await taki({
+    url: 'http://elm-spa-example.gizra.com/',
+    minify: true
+  })
+  t.snapshot(html)
+})
+
 test('wait', async t => {
   const html = await taki({
     url: 'http://elm-spa-example.gizra.com/',

@@ -27,6 +27,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "html-minifier": "^3.5.8",
     "puppeteer": "^0.13.0"
   },
   "devDependencies": {

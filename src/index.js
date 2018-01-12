@@ -1,6 +1,10 @@
 import puppeteer from 'puppeteer'
+import minifier from 'html-minifier'
 
-async function getHTML(browser, { url, wait = 50, manually, onFetch, onFetched }) {
+async function getHTML(
+  browser,
+  { url, wait = 50, manually, onFetch, onFetched, minify }
+) {
   onFetch && onFetch(url)
   const page = await browser.newPage()
   await page.goto(url)
@@ -8,11 +12,7 @@ async function getHTML(browser, { url, wait = 50, manually, onFetch, onFetched }
     await page.evaluate(() => {
       return new Promise(resolve => {
         // eslint-disable-next-line no-undef
-        window[
-          typeof manually === 'string' ?
-          manually :
-          'snapshot'
-        ] = resolve
+        window[typeof manually === 'string' ? manually : 'snapshot'] = resolve
       })
     })
   } else {
@@ -20,7 +20,20 @@ async function getHTML(browser, { url, wait = 50, manually, onFetch, onFetched }
   }
   const html = await page.content()
   onFetched && onFetched(url)
-  return html
+  const minifyOptions = typeof minify === 'object' ? minify : {
+    minifyCSS: true,
+    minifyJS: true,
+    collapseWhitespace: true,
+    decodeEntities: true,
+    removeComments: true,
+    removeAttributeQuotes: true,
+    removeScriptTypeAttributes: true,
+    removeRedundantAttributes: true,
+    removeStyleLinkTypeAttributes: true
+  }
+  return minify ?
+    minifier.minify(html, minifyOptions) :
+    html
 }
 
 export default async function (options) {

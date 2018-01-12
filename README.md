@@ -83,6 +83,17 @@ taki({
 
 This option will be ignored if [manually](#manually-take-snapshot) is set.
 
+### Minify
+
+Minify HTML.
+
+```js
+taki({
+  url,
+  minify: true
+})
+```
+
 ## Contributing
 
 1. Fork it!
