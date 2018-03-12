@@ -94,6 +94,27 @@ taki({
 })
 ```
 
+### Filter resource
+
+We always abort network requests to following types of resource: `stylesheet` `image` `media` `font` since they're not required to render the page. In addtion, you can use `resourceFilter` option to abort specfic type of resource:
+
+```js
+taki({
+  url,
+  /**
+   * @param {Object} context
+   * @param {string} context.type - Resource type
+   * @see {@link https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#requestresourcetype}
+   * @param {string} context.url - Resource URL
+   * @see {@link https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#requesturl}
+   * @returns {boolean} Whether to load this resource
+   */
+  resourceFilter({ type, url }) {
+    // Return true to load the resource, false otherwise.
+  }
+})
+```
+
 ## Contributing
 
 1. Fork it!

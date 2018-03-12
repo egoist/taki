@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "html-minifier": "^3.5.8",
-    "puppeteer": "^0.13.0"
+    "puppeteer": "^1.1.1"
   },
   "devDependencies": {
     "ava": "^0.21.0",
