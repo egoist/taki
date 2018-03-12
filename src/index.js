@@ -55,9 +55,9 @@ async function getHTML(
 
 let launchedBrowser
 
-async function taki(options = {}) {
+async function taki(options, { keepBrowser } = {}) {
   const browser = launchedBrowser || (await puppeteer.launch())
-  if (options.keepBrowser) {
+  if (keepBrowser) {
     launchedBrowser = browser
   }
   try {
