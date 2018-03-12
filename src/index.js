@@ -1,12 +1,7 @@
 import puppeteer from 'puppeteer'
 import minifier from 'html-minifier'
 
-const resourceTypeBlacklist = new Set([
-  'stylesheet',
-  'image',
-  'media',
-  'font'
-])
+const resourceTypeBlacklist = new Set(['stylesheet', 'image', 'media', 'font'])
 
 async function getHTML(
   browser,
@@ -26,7 +21,9 @@ async function getHTML(
     }
     return interceptedRequest.continue()
   })
-  await page.goto(url, { waitUntil: manually ? 'domcontentloaded' : 'networkidle2' })
+  await page.goto(url, {
+    waitUntil: manually ? 'domcontentloaded' : 'networkidle2'
+  })
   if (manually) {
     await page.evaluate(() => {
       return new Promise(resolve => {
@@ -39,24 +36,30 @@ async function getHTML(
   }
   const html = await page.content()
   onFetched && onFetched(url)
-  const minifyOptions = typeof minify === 'object' ? minify : {
-    minifyCSS: true,
-    minifyJS: true,
-    collapseWhitespace: true,
-    decodeEntities: true,
-    removeComments: true,
-    removeAttributeQuotes: true,
-    removeScriptTypeAttributes: true,
-    removeRedundantAttributes: true,
-    removeStyleLinkTypeAttributes: true
-  }
-  return minify ?
-    minifier.minify(html, minifyOptions) :
-    html
+  const minifyOptions =
+    typeof minify === 'object' ?
+      minify :
+    {
+      minifyCSS: true,
+      minifyJS: true,
+      collapseWhitespace: true,
+      decodeEntities: true,
+      removeComments: true,
+      removeAttributeQuotes: true,
+      removeScriptTypeAttributes: true,
+      removeRedundantAttributes: true,
+      removeStyleLinkTypeAttributes: true
+    }
+  return minify ? minifier.minify(html, minifyOptions) : html
 }
 
-export default async function (options) {
-  const browser = await puppeteer.launch()
+let launchedBrowser
+
+async function taki(options = {}) {
+  const browser = launchedBrowser || (await puppeteer.launch())
+  if (options.keepBrowser) {
+    launchedBrowser = browser
+  }
   try {
     const result = Array.isArray(options) ?
       await Promise.all(options.map(option => getHTML(browser, option))) :
@@ -68,3 +71,7 @@ export default async function (options) {
     throw err
   }
 }
+
+taki.closeBrowser = () => launchedBrowser && launchedBrowser.close()
+
+export default taki
