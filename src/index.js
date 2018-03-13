@@ -3,7 +3,7 @@ import debug from 'debug'
 import puppeteer from 'puppeteer'
 import minifier from 'html-minifier'
 
-const log = debug('taki')
+const debugRequest = debug('taki:request')
 
 const resourceTypeBlacklist = new Set(['stylesheet', 'image', 'media', 'font'])
 
@@ -18,11 +18,11 @@ async function getHTML(
     const type = interceptedRequest.resourceType()
     const resourceURL = interceptedRequest.url()
     const next = () => {
-      log(`Fetch resource: ${resourceURL}`)
+      debugRequest(`Fetched: ${resourceURL}`)
       interceptedRequest.continue()
     }
     const abort = () => {
-      log(`Abort resource: ${resourceURL}`)
+      debugRequest(`Aborted: ${resourceURL}`)
       return interceptedRequest.abort()
     }
     if (blockCrossOrigin && parseURL(resourceURL).host !== parseURL(url).host) {
