@@ -19,7 +19,7 @@ cli.command('*', {
   }
 
   if (flags.verbose) {
-    process.env.DEBUG = 'taki'
+    process.env.DEBUG = 'taki,taki:*'
   }
 
   const debug = require('debug')('taki')
