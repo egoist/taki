@@ -11,8 +11,9 @@ cli.command('*', {
   ]
 }, async (input, flags) => {
   if (input.length === 0) return cli.showHelp()
+  const url = input[0]
   const options = {
-    url: input[0],
+    url: /^https?:\/\//.test(url) ? url : `http://${url}`,
     ...flags
   }
 
