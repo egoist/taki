@@ -115,6 +115,8 @@ taki({
 })
 ```
 
+You can also use `blockCrossOrigin: true` shortcut to block all cross-origin requests.
+
 ## Contributing
 
 1. Fork it!

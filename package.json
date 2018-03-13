@@ -6,7 +6,8 @@
     "url": "egoist/taki",
     "type": "git"
   },
-  "main": "dist/taki.js",
+  "bin": "dist/cli.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -19,7 +20,7 @@
     "test": "npm run lint && ava",
     "lint": "xo",
     "prepublishOnly": "npm run build",
-    "build": "bili --filename taki.js --buble.target.node 6"
+    "build": "bili src/{index,cli}.js --filename [name].js --target node --no-babel.babelrc"
   },
   "author": "egoist <0x142857@gmail.com>",
   "license": "MIT",
@@ -27,6 +28,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "cac": "^4.4.3",
+    "debug": "^3.1.0",
     "html-minifier": "^3.5.8",
     "puppeteer": "^1.1.1"
   },
@@ -34,7 +37,7 @@
     "ava": "^0.21.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
-    "bili": "^1.4.2",
+    "bili": "^3.0.4",
     "eslint-config-rem": "^3.0.0",
     "xo": "^0.18.0"
   },

@@ -1,25 +1,40 @@
+import { parse as parseURL } from 'url'
+import debug from 'debug'
 import puppeteer from 'puppeteer'
 import minifier from 'html-minifier'
+
+const log = debug('taki')
 
 const resourceTypeBlacklist = new Set(['stylesheet', 'image', 'media', 'font'])
 
 async function getHTML(
   browser,
-  { url, wait, manually, onFetch, onFetched, minify, resourceFilter }
+  { url, wait, manually, onFetch, onFetched, minify, resourceFilter, blockCrossOrigin }
 ) {
   onFetch && onFetch(url)
   const page = await browser.newPage()
   await page.setRequestInterception(true)
   page.on('request', interceptedRequest => {
     const type = interceptedRequest.resourceType()
-    const url = interceptedRequest.url()
+    const resourceURL = interceptedRequest.url()
+    const next = () => {
+      log(`Fetch resource: ${resourceURL}`)
+      interceptedRequest.continue()
+    }
+    const abort = () => {
+      log(`Abort resource: ${resourceURL}`)
+      return interceptedRequest.abort()
+    }
+    if (blockCrossOrigin && parseURL(resourceURL).host !== parseURL(url).host) {
+      return abort()
+    }
     if (resourceTypeBlacklist.has(type)) {
-      return interceptedRequest.abort()
+      return abort()
     }
-    if (resourceFilter && !resourceFilter({ url, type })) {
-      return interceptedRequest.abort()
+    if (resourceFilter && !resourceFilter({ url: resourceURL, type })) {
+      return abort()
     }
-    return interceptedRequest.continue()
+    return next()
   })
   await page.goto(url, {
     waitUntil: manually ? 'domcontentloaded' : 'networkidle2'
