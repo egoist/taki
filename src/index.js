@@ -35,6 +35,7 @@ async function getHTML(
     await page.waitFor(wait)
   }
   const html = await page.content()
+  await page.close()
   onFetched && onFetched(url)
   const minifyOptions =
     typeof minify === 'object' ?
@@ -53,25 +54,23 @@ async function getHTML(
   return minify ? minifier.minify(html, minifyOptions) : html
 }
 
-let launchedBrowser
+async function taki(options, { browser, shouldCloseBrowser = true } = {}) {
+  browser = browser || (await puppeteer.launch())
 
-async function taki(options, { keepBrowser } = {}) {
-  const browser = launchedBrowser || (await puppeteer.launch())
-  if (keepBrowser) {
-    launchedBrowser = browser
-  }
   try {
     const result = Array.isArray(options) ?
       await Promise.all(options.map(option => getHTML(browser, option))) :
       await getHTML(browser, options)
-    await browser.close()
+    if (shouldCloseBrowser) {
+      await browser.close()
+    }
     return result
   } catch (err) {
-    await browser.close()
+    if (shouldCloseBrowser) {
+      await browser.close()
+    }
     throw err
   }
 }
-
-taki.closeBrowser = () => launchedBrowser && launchedBrowser.close()
 
 export default taki
