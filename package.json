@@ -28,32 +28,32 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "cac": "^4.4.3",
-    "debug": "^3.1.0",
-    "html-minifier": "^3.5.8",
-    "puppeteer": "^1.1.1"
+    "cac": "^5.0.15",
+    "debug": "^4.1.0",
+    "html-minifier": "^3.5.21",
+    "puppeteer": "^1.10.0"
   },
   "devDependencies": {
-    "ava": "^0.21.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "bili": "^3.0.4",
-    "eslint-config-rem": "^3.0.0",
-    "xo": "^0.18.0"
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "ava": "^1.0.0-rc.2",
+    "bili": "^3.4.0",
+    "eslint-config-rem": "^4.0.0",
+    "xo": "^0.23.0"
   },
   "xo": {
     "extends": "rem"
   },
   "ava": {
-    "babel": "inherit",
     "require": [
-      "babel-register"
+      "@babel/register"
     ]
   },
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "node": "current"

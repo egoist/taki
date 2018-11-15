@@ -55,21 +55,22 @@ async function getHTML(
   const minifyOptions =
     typeof minify === 'object' ?
       minify :
-    {
-      minifyCSS: true,
-      minifyJS: true,
-      collapseWhitespace: true,
-      decodeEntities: true,
-      removeComments: true,
-      removeAttributeQuotes: true,
-      removeScriptTypeAttributes: true,
-      removeRedundantAttributes: true,
-      removeStyleLinkTypeAttributes: true
-    }
+      {
+        minifyCSS: true,
+        minifyJS: true,
+        collapseWhitespace: true,
+        decodeEntities: true,
+        removeComments: true,
+        removeAttributeQuotes: true,
+        removeScriptTypeAttributes: true,
+        removeRedundantAttributes: true,
+        removeStyleLinkTypeAttributes: true
+      }
   return minify ? minifier.minify(html, minifyOptions) : html
 }
 
 async function taki(options, { browser, shouldCloseBrowser = true } = {}) {
+  // eslint-disable-next-line require-atomic-updates
   browser = browser || (await puppeteer.launch())
 
   try {
@@ -80,11 +81,11 @@ async function taki(options, { browser, shouldCloseBrowser = true } = {}) {
       await browser.close()
     }
     return result
-  } catch (err) {
+  } catch (error) {
     if (shouldCloseBrowser) {
       await browser.close()
     }
-    throw err
+    throw error
   }
 }
 

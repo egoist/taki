@@ -32,12 +32,12 @@ cli.command('*', {
     console.log(html)
   }
 }).option('block-cross-origin', 'Block cross-origin resource')
-.option('minify', 'Minify output')
-.option('wait', 'Wait for a timeout or certain element to appear')
-.option('output', {
-  desc: 'Redirect output to a file',
-  alias: 'o'
-})
-.option('verbose', 'Output as much info as possible')
+  .option('minify', 'Minify output')
+  .option('wait', 'Wait for a timeout or certain element to appear')
+  .option('output', {
+    desc: 'Redirect output to a file',
+    alias: 'o'
+  })
+  .option('verbose', 'Output as much info as possible')
 
 cli.parse()
