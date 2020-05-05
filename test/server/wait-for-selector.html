@@ -1,0 +1,13 @@
+<script>
+setTimeout(() => {
+  document.write('foo')
+  window.snapshot && window.snapshot()
+}, 200)
+
+setTimeout(() => {
+  const el = document.createElement('div')
+  el.id = 'bar'
+  el.textContent = 'bar'
+  document.body.appendChild(el)
+}, 400)
+</script>

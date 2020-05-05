@@ -17,49 +17,32 @@
     "crawler"
   ],
   "scripts": {
-    "test": "npm run lint && ava",
-    "lint": "xo",
+    "test": "jest",
     "prepublishOnly": "npm run build",
-    "build": "bili src/{index,cli}.js --filename [name].js --target node --no-babel.babelrc"
+    "build": "rollup -c",
+    "watch": "rollup -c --watch"
   },
   "author": "egoist <0x142857@gmail.com>",
   "license": "MIT",
-  "jest": {
-    "testEnvironment": "node"
-  },
   "dependencies": {
-    "cac": "^5.0.15",
-    "debug": "^4.1.0",
-    "html-minifier": "^3.5.21",
-    "puppeteer": "^1.10.0"
+    "cac": "^6.5.8",
+    "debug": "^4.1.1",
+    "html-minifier": "^4.0.0",
+    "puppeteer-core": "^3.0.2",
+    "which": "^2.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
-    "@babel/register": "^7.0.0",
-    "ava": "^1.0.0-rc.2",
-    "bili": "^3.4.0",
-    "eslint-config-rem": "^4.0.0",
-    "xo": "^0.23.0"
-  },
-  "xo": {
-    "extends": "rem"
-  },
-  "ava": {
-    "require": [
-      "@babel/register"
-    ]
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ]
+    "@types/debug": "^4.1.5",
+    "@types/html-minifier": "^3.5.3",
+    "@types/jest": "^25.2.1",
+    "@types/puppeteer-core": "^2.0.0",
+    "get-port": "^5.1.1",
+    "jest": "^25.0.0",
+    "prettier": "^2.0.5",
+    "rollup": "^2.7.6",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "sirv": "^0.4.2",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
   }
 }

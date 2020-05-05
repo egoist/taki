@@ -13,7 +13,7 @@ Built on the top of Google's [Puppeteer](https://github.com/GoogleChrome/puppete
 ## Usage
 
 ```js
-const taki = require('taki')
+const { request } = require('taki')
 
 // Prerender this page to static HTML
 // Wait for 1s since this page renders remote markdown file
@@ -22,6 +22,15 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
   // serialized html string of target url
   console.log(html)
 })
+```
+
+__NOTE__: You need to call `cleanup` when you no longer use `taki`:
+
+```js
+import { cleanup } from 'taki'
+
+// After fetching..
+cleanup()
 ```
 
 ### Multiplate URLs
