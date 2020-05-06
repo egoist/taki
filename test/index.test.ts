@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { createServer, Server } from 'http'
+import test from 'ava'
 import sirv from 'sirv'
 import getPort from 'get-port'
 import { request, cleanup } from '../src'
@@ -14,49 +15,30 @@ function serve() {
 let server: Server
 let port: number
 
-beforeAll(async () => {
+test.before(async () => {
   server = serve()
   port = await getPort()
   server.listen(port)
 })
 
-afterAll(() => {
+test.after(async () => {
   server && server.close()
-  cleanup()
+  await cleanup()
 })
 
-test('basic', async () => {
+test('basic', async t => {
   const html = await request({
     url: `http://localhost:${port}/basic.html`,
   })
-  expect(html).toMatchInlineSnapshot(`
-    "<html><head></head><body><h1 id=\\"title\\">hello world</h1>
-
-    <script>
-      function main() {
-        document.getElementById('title').textContent += ' world'
-      }
-
-      main()
-    </script>
-
-    <style>
-      #title {
-        color: red;
-      }
-    </style>
-    </body></html>"
-  `)
+  t.snapshot(html)
 })
 
-test('minify', async () => {
+test('minify', async (t) => {
   const html = await request({
     url: `http://localhost:${port}/basic.html`,
     minify: true,
   })
-  expect(html).toMatchInlineSnapshot(
-    `"<html><head></head><body><h1 id=title>hello world</h1><script>function main(){document.getElementById(\\"title\\").textContent+=\\" world\\"}main()</script><style>#title{color:red}</style></body></html>"`
-  )
+  t.snapshot(html)
 })
 
 test('wait for selector', async (t) => {
@@ -64,10 +46,7 @@ test('wait for selector', async (t) => {
     url: `http://localhost:${port}/wait-for-selector.html`,
     wait: '#bar',
   })
-console.log(html)
-  expect(html).toMatchInlineSnapshot(
-    `"<html><head></head><body>foo<div id=\\"bar\\">bar</div></body></html>"`
-  )
+  t.snapshot(html)
 })
 
 test('manually', async (t) => {
@@ -76,7 +55,5 @@ test('manually', async (t) => {
     manually: true,
   })
 
-  expect(html).toMatchInlineSnapshot(
-    `"<html><head></head><body>foo</body></html>"`
-  )
+  t.snapshot(html)
 })

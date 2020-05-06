@@ -12,8 +12,10 @@ export default {
     ts({
       tsconfigOverride: {
         compilerOptions: {
-          module: 'esnext'
-        }
+          module: 'esnext',
+          declaration: true
+        },
+        include: ["src/**/*"]
       }
     })
   ]
