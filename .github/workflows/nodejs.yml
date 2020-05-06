@@ -36,6 +36,9 @@ jobs:
           ${{ runner.os }}-yarn-
     - run: yarn
     - run: yarn test
+      env:
+        CI: true
+        NODE_ENV: test
     - name: Release
       run: npx semantic-release
       env:
