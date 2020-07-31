@@ -17,6 +17,7 @@ export type TakiOptions = {
   onBeforeRequest?: (url: string) => void
   onAfterRequest?: (url: string) => void
   onCreatedPage?: (page: Page) => void | Promise<void>
+  onBeforeClosingPage?: (page: Page) => void | Promise<void>
   minify?: boolean
   resourceFilter?: (ctx: ResourceFilterCtx) => boolean
   blockCrossOrigin?: boolean
@@ -83,6 +84,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
     await page.waitForSelector(options.wait)
   }
   content = result ? result.content : await page.content()
+  options.onBeforeClosingPage && (await options.onBeforeClosingPage(page))
   await page.close()
   options.onAfterRequest && options.onAfterRequest(options.url)
   const minifyOptions =
