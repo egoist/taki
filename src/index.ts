@@ -60,26 +60,29 @@ async function getHTML(browser: Browser, options: TakiOptions) {
     }
     return next()
   })
+  let resolveFunction: Function | undefined
+  let content: string = ''
+  type Result = { content: string }
+  const promise = new Promise<Result>((resolve) => (resolveFunction = resolve))
+  if (options.manually) {
+    const functionName =
+      typeof options.manually === 'string' ? options.manually : 'snapshot'
+    await page.exposeFunction(functionName, (result) => {
+      resolveFunction!(result)
+    })
+  }
   await page.goto(options.url, {
     waitUntil: options.manually ? 'domcontentloaded' : 'networkidle2',
   })
-  let resolved: any
+  let result: Result | undefined
   if (options.manually) {
-    resolved = await page.evaluate(
-      (manually) => {
-        return new Promise((resolve) => {
-          // @ts-ignore
-          window[typeof manually === 'string' ? manually : 'snapshot'] = resolve
-        })
-      },
-      [options.manually]
-    )
+    result = await promise
   } else if (options.wait === 'number') {
     await page.waitFor(options.wait)
   } else if (options.wait === 'string') {
     await page.waitForSelector(options.wait)
   }
-  const content = resolved || (await page.content())
+  content = result ? result.content : await page.content()
   await page.close()
   options.onAfterRequest && options.onAfterRequest(options.url)
   const minifyOptions =
