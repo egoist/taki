@@ -14,14 +14,14 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install dependences
-          command: npm ci
+          command: yarn
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
           name: test
-          command: npm test
+          command: yarn test
       - run:
           name: release
           command: npx semantic-release
