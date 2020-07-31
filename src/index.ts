@@ -1,6 +1,6 @@
 import { parse as parseURL } from 'url'
 import debug from 'debug'
-import { launch, Browser } from 'puppeteer-core'
+import pptr, { Browser } from 'puppeteer-core'
 import { minify as minifyHTML } from 'html-minifier'
 import { findChrome } from './find-chrome'
 
@@ -96,9 +96,12 @@ async function getHTML(browser: Browser, options: TakiOptions) {
 
 let browser: Browser | undefined
 
+export async function request(options: TakiOptions): Promise<string>
+export async function request(options: TakiOptions[]): Promise<string[]>
+
 export async function request(options: TakiOptions | TakiOptions[]) {
   if (!browser) {
-    browser = await launch({
+    browser = await pptr.launch({
       executablePath: findChrome(),
       // headless: false,
     })

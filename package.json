@@ -31,7 +31,7 @@
       "ts"
     ],
     "require": [
-      "ts-node/register/transpile-only"
+      "sucrase/register"
     ]
   },
   "dependencies": {
