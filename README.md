@@ -1,6 +1,6 @@
 # taki
 
-[![NPM version](https://img.shields.io/npm/v/taki.svg?style=flat)](https://npmjs.com/package/taki) [![NPM downloads](https://img.shields.io/npm/dm/taki.svg?style=flat)](https://npmjs.com/package/taki) [![CircleCI](https://circleci.com/gh/egoist/taki/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/taki/tree/master)  [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate)
+[![NPM version](https://img.shields.io/npm/v/taki.svg?style=flat)](https://npmjs.com/package/taki) [![NPM downloads](https://img.shields.io/npm/dm/taki.svg?style=flat)](https://npmjs.com/package/taki) [![CircleCI](https://circleci.com/gh/egoist/taki/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/taki/tree/master) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate)
 
 ## Install
 
@@ -13,12 +13,11 @@ Built on the top of Google's [Puppeteer](https://github.com/GoogleChrome/puppete
 ## Usage
 
 ```js
-const taki = require('taki')
+const { taki } = require('taki')
 
 // Prerender this page to static HTML
 // Wait for 1s since this page renders remote markdown file
-taki({ url: 'https://sao.js.org', wait: 1000 })
-.then(html => {
+taki({ url: 'https://sao.js.org', wait: 1000 }).then((html) => {
   // serialized html string of target url
   console.log(html)
 })
@@ -28,9 +27,9 @@ taki({ url: 'https://sao.js.org', wait: 1000 })
 
 ```js
 taki([
-  { url: 'https://sao.js.org' }, 
-  { url: 'https://sao.js.org/#/create' }  
-]).then(result => {
+  { url: 'https://sao.js.org' },
+  { url: 'https://sao.js.org/#/create' },
+]).then((result) => {
   // Then the result will an array of html string
 })
 ```
@@ -42,7 +41,7 @@ By default **taki** will take a snapshot of the URL when all resources are loade
 ```js
 taki({
   url: 'http://my-web.com',
-  manually: true
+  manually: true,
 })
 ```
 
@@ -61,7 +60,7 @@ Alternatively, choose your own method to invoke when your app is ready to return
 ```js
 taki({
   url: 'http://my-web.com',
-  manually: 'iamready'
+  manually: 'iamready',
 })
 ```
 
@@ -77,7 +76,7 @@ taki({
   // Wait for 3000 ms
   wait: 3000,
   // Or wait for <div class="comments"></div> to appear
-  wait: '.comments'
+  wait: '.comments',
 })
 ```
 
@@ -90,7 +89,7 @@ Minify HTML.
 ```js
 taki({
   url,
-  minify: true
+  minify: true,
 })
 ```
 
@@ -111,7 +110,7 @@ taki({
    */
   resourceFilter({ type, url }) {
     // Return true to load the resource, false otherwise.
-  }
+  },
 })
 ```
 
@@ -125,10 +124,9 @@ You can also use `blockCrossOrigin: true` shortcut to block all cross-origin req
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-
 ## Author
 
 **taki** © [egoist](https://github.com/egoist), Released under the [MIT](./LICENSE) License.<br>
 Authored and maintained by egoist with help from contributors ([list](https://github.com/egoist/taki/contributors)).
 
-> [Website](https://egoist.sh) · GitHub [@egoist](https://github.com/egoist) · Twitter [@_egoistlily](https://twitter.com/_egoistlily)
+> [Website](https://egoist.sh) · GitHub [@egoist](https://github.com/egoist) · Twitter [@\_egoistlily](https://twitter.com/_egoistlily)
