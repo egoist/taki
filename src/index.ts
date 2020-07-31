@@ -30,7 +30,6 @@ async function getHTML(
   page.on('request', (interceptedRequest) => {
     const type = interceptedRequest.resourceType()
     const resourceURL = interceptedRequest.url()
-    console.log(resourceURL)
     const next = () => {
       debugRequest(`Fetched: ${resourceURL}`)
       interceptedRequest.continue()
@@ -67,7 +66,6 @@ async function getHTML(
     await page.waitForSelector(wait)
   }
   const html = await page.content()
-  console.log(html)
   await page.close()
   onFetched && onFetched(url)
   const minifyOptions =
@@ -122,7 +120,7 @@ async function taki(
   const browser =
     extraOptions.browser ||
     (await puppeteer.launch({
-      // executablePath: findChrome(),
+      executablePath: puppeteer.executablePath() || findChrome(),
       args: [
         ...(extraOptions.args || []),
         ...(extraOptions.sandbox === false
