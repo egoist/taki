@@ -60,12 +60,9 @@ async function getHTML(browser: Browser, options: TakiOptions) {
     }
     return next()
   })
-  const response = await page.goto(options.url, {
+  await page.goto(options.url, {
     waitUntil: options.manually ? 'domcontentloaded' : 'networkidle2',
   })
-  if (!response) {
-    return
-  }
   let resolved: any
   if (options.manually) {
     resolved = await page.evaluate(
@@ -82,9 +79,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   } else if (options.wait === 'string') {
     await page.waitForSelector(options.wait)
   }
-  const headers = response.headers()
-  const type = headers['content-type']
-  const content = resolved || (await response.text())
+  const content = resolved || (await page.content())
   await page.close()
   options.onAfterRequest && options.onAfterRequest(options.url)
   const minifyOptions =
@@ -101,9 +96,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
           removeRedundantAttributes: true,
           removeStyleLinkTypeAttributes: true,
         }
-  return options.minify && type.includes('text/html')
-    ? minifyHTML(content, minifyOptions)
-    : content
+  return options.minify ? minifyHTML(content, minifyOptions) : content
 }
 
 let browser: Browser | undefined
