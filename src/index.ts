@@ -1,6 +1,6 @@
 import { parse as parseURL } from 'url'
 import debug from 'debug'
-import pptr, { Browser } from 'puppeteer-core'
+import pptr, { Browser, Page } from 'puppeteer-core'
 import { minify as minifyHTML } from 'html-minifier'
 import { findChrome } from './find-chrome'
 
@@ -16,6 +16,7 @@ export type TakiOptions = {
   wait?: string | number
   onBeforeRequest?: (url: string) => void
   onAfterRequest?: (url: string) => void
+  onCreatedPage?: (page: Page) => void
   minify?: boolean
   resourceFilter?: (ctx: ResourceFilterCtx) => boolean
   blockCrossOrigin?: boolean
@@ -28,6 +29,9 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   await page.setUserAgent(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36 Prerender'
   )
+  if (options.onCreatedPage) {
+    options.onCreatedPage(page)
+  }
   page.on('request', (interceptedRequest) => {
     const type = interceptedRequest.resourceType()
     const resourceURL = interceptedRequest.url()
