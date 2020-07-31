@@ -6,8 +6,8 @@
     "url": "egoist/taki",
     "type": "git"
   },
-  "bin": "dist/cli.js",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -19,13 +19,14 @@
   "scripts": {
     "test": "ava",
     "prepublishOnly": "npm run build",
-    "build": "rollup -c",
-    "watch": "rollup -c --watch"
+    "build": "rm -rf dist && tsup src/index.ts --dts"
   },
   "author": "egoist <0x142857@gmail.com>",
   "license": "MIT",
   "ava": {
-    "files": ["test/**/*.test.ts"],
+    "files": [
+      "test/**/*.test.ts"
+    ],
     "extensions": [
       "ts"
     ],
@@ -34,23 +35,19 @@
     ]
   },
   "dependencies": {
-    "cac": "^6.5.8",
-    "debug": "^4.1.1",
-    "html-minifier": "^4.0.0",
-    "puppeteer-core": "^3.0.2",
-    "which": "^2.0.2"
+    "debug": "4.1.1",
+    "html-minifier": "4.0.0",
+    "puppeteer-core": "5.2.1"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.5",
-    "@types/html-minifier": "^3.5.3",
-    "@types/puppeteer-core": "^2.0.0",
-    "ava": "^3.8.1",
-    "get-port": "^5.1.1",
-    "prettier": "^2.0.5",
-    "rollup": "^2.7.6",
-    "rollup-plugin-typescript2": "^0.27.0",
-    "sirv": "^0.4.2",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.8.3"
+    "@types/debug": "4.1.5",
+    "@types/html-minifier": "3.5.3",
+    "@types/puppeteer-core": "2.0.0",
+    "ava": "3.11.0",
+    "get-port": "5.1.1",
+    "prettier": "2.0.5",
+    "sirv": "1.0.1",
+    "tsup": "^3.4.2",
+    "typescript": "3.9.7"
   }
 }
