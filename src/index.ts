@@ -66,8 +66,9 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   if (!response) {
     return
   }
+  let resolved: any
   if (options.manually) {
-    await page.evaluate(
+    resolved = await page.evaluate(
       (manually) => {
         return new Promise((resolve) => {
           // @ts-ignore
@@ -83,7 +84,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   }
   const headers = response.headers()
   const type = headers['content-type']
-  const content = await response.text()
+  const content = resolved || (await response.text())
   await page.close()
   options.onAfterRequest && options.onAfterRequest(options.url)
   const minifyOptions =
