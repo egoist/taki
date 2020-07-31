@@ -34,6 +34,9 @@
       "sucrase/register"
     ]
   },
+  "engines": {
+    "node": ">=12"
+  },
   "dependencies": {
     "debug": "4.1.1",
     "html-minifier": "4.0.0",
