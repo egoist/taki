@@ -1,52 +1,52 @@
 import test from 'ava'
-import taki from '../src'
+import { taki } from '../src'
 
-test('main', async t => {
-  const html = await taki({
-    url: 'http://elm-spa-example.gizra.com/'
-  })
-  t.snapshot(html)
-})
-
-test('minify', async t => {
+test('main', async (t) => {
   const html = await taki({
     url: 'http://elm-spa-example.gizra.com/',
-    minify: true
   })
   t.snapshot(html)
 })
 
-test('wait', async t => {
+test('minify', async (t) => {
   const html = await taki({
     url: 'http://elm-spa-example.gizra.com/',
-    wait: 1000
+    minify: true,
+  })
+  t.snapshot(html)
+})
+
+test('wait', async (t) => {
+  const html = await taki({
+    url: 'http://elm-spa-example.gizra.com/',
+    wait: 1000,
   })
 
   t.snapshot(html)
 })
 
-test('multiple urls', async t => {
+test('multiple urls', async (t) => {
   const html = await taki([
     { url: 'http://elm-spa-example.gizra.com/', wait: 1000 },
-    { url: 'http://elm-spa-example.gizra.com/', wait: 1000 }
+    { url: 'http://elm-spa-example.gizra.com/', wait: 1000 },
   ])
 
   t.snapshot(html)
 })
 
-test('wait for selector', async t => {
+test('wait for selector', async (t) => {
   const html = await taki({
     url: 'https://84onq72m32.codesandbox.io/',
-    wait: '#bar'
+    wait: '#bar',
   })
 
   t.snapshot(html)
 })
 
-test('manually', async t => {
+test('manually', async (t) => {
   const html = await taki({
     url: 'https://84onq72m32.codesandbox.io/',
-    manually: true
+    manually: true,
   })
 
   t.snapshot(html)
