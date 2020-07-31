@@ -1,6 +1,6 @@
 import { parse as parseURL } from 'url'
 import debug from 'debug'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 import minifier from 'html-minifier'
 import { findChrome } from './find-chrome'
 
@@ -120,7 +120,7 @@ async function taki(
   const browser =
     extraOptions.browser ||
     (await puppeteer.launch({
-      executablePath: puppeteer.executablePath() || findChrome(),
+      executablePath: findChrome(),
       args: [
         ...(extraOptions.args || []),
         ...(extraOptions.sandbox === false

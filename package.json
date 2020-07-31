@@ -30,7 +30,7 @@
     "cac": "6.6.1",
     "debug": "4.1.1",
     "html-minifier": "4.0.0",
-    "puppeteer": "5.2.1"
+    "puppeteer-core": "5.2.1"
   },
   "devDependencies": {
     "@egoist/prettier-config": "^0.1.0",
@@ -38,7 +38,7 @@
     "@types/html-minifier": "^4.0.0",
     "@types/node": "^14.0.27",
     "@types/polka": "^0.5.1",
-    "@types/puppeteer": "^3.0.1",
+    "@types/puppeteer-core": "2.0.0",
     "ava": "3.11.0",
     "polka": "^0.5.2",
     "sucrase": "^3.15.0",
