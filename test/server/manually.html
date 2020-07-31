@@ -1,0 +1,18 @@
+<h1>haha</h1>
+
+<script>
+setTimeout(() => {
+  document.write('foo')
+  window.snapshot && window.snapshot()
+}, 300)
+
+setTimeout(() => {
+  const el = document.createElement('div')
+  el.id = 'bar'
+  el.textContent = 'bar'
+  document.body.appendChild(el)
+}, 400)
+</script>
+
+
+
