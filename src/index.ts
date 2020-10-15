@@ -20,7 +20,8 @@ export type TakiOptions = {
   onBeforeClosingPage?: (page: Page) => void | Promise<void>
   minify?: boolean
   resourceFilter?: (ctx: ResourceFilterCtx) => boolean
-  blockCrossOrigin?: boolean
+  blockCrossOrigin?: boolean,
+  chromePath?: string | string[]
 }
 
 async function getHTML(browser: Browser, options: TakiOptions) {
@@ -112,7 +113,7 @@ export async function request(options: TakiOptions[]): Promise<string[]>
 export async function request(options: TakiOptions | TakiOptions[]) {
   if (!browser) {
     browser = await pptr.launch({
-      executablePath: findChrome(),
+      executablePath: findChrome(options.chromePath),
       // headless: false,
     })
   }

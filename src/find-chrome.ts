@@ -29,8 +29,13 @@ const paths: string[] =
         '/snap/bin/chromium',
       ]
 
-export function findChrome(): string {
-  for (const p of paths) {
+export function findChrome(chromePath?: string | string[]): string {
+  const allPaths = paths;
+  if (chromePath) {
+    if (!Array.isArray(chromePath)) allPaths.push(chromePath);
+    else allPaths.push(...chromePath);
+  }
+  for (const p of allPaths) {
     if (fs.existsSync(p)) {
       return p
     }
