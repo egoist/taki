@@ -35,7 +35,7 @@ function getLocalChromiumPath(): string | undefined {
   try {
     const { path } = require('chromium')
   	return path
-  } catch() {}
+  } catch {}
 }
 
 export function findChrome(): string {
