@@ -34,7 +34,7 @@ const paths_os: string[] =
 function getLocalChromiumPath(): string | undefined {
   try {
     const { path } = require('chromium')
-  	return path
+    return path
   } catch {}
 }
 
