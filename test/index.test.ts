@@ -21,7 +21,7 @@ test.before(async () => {
   server.listen(port)
 })
 
-test.after(async () => {
+test.after.always(async () => {
   server && server.close()
   await cleanup()
 })
