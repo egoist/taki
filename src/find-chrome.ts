@@ -2,7 +2,7 @@ import fs from 'fs'
 
 const { CHROME_PATH } = process.env
 
-const paths: string[] =
+const paths: (string | undefined)[] =
   process.platform === 'darwin'
     ? [
         CHROME_PATH,
