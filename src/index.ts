@@ -68,7 +68,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   if (options.manually) {
     const functionName =
       typeof options.manually === 'string' ? options.manually : 'snapshot'
-    await page.exposeFunction(functionName, (result) => {
+    await page.exposeFunction(functionName, (result: any) => {
       resolveFunction!(result)
     })
   }
