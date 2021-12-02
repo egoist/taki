@@ -68,7 +68,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   if (options.manually) {
     const functionName =
       typeof options.manually === 'string' ? options.manually : 'snapshot'
-    await page.exposeFunction(functionName, (result) => {
+    await page.exposeFunction(functionName, (result: any) => {
       resolveFunction!(result)
     })
   }
@@ -78,9 +78,9 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   let result: Result | undefined
   if (options.manually) {
     result = await promise
-  } else if (options.wait === 'number') {
+  } else if (typeof options.wait === 'number') {
     await page.waitFor(options.wait)
-  } else if (options.wait === 'string') {
+  } else if (typeof options.wait === 'string') {
     await page.waitForSelector(options.wait)
   }
   content = result ? result.content : await page.content()

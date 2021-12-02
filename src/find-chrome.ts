@@ -2,7 +2,7 @@ import fs from 'fs'
 
 const { CHROME_PATH } = process.env
 
-const paths_os: string[] =
+const paths: (string | undefined)[] =
   process.platform === 'darwin'
     ? [
         '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
