@@ -109,12 +109,20 @@ async function getHTML(browser: Browser, options: RequestOptions) {
 
 let browser: Browser | undefined
 
-export async function request(options: RequestOptions): Promise<string>
-export async function request(options: RequestOptions[]): Promise<string[]>
+export type BrowserOptions = { proxy?: string; headless?: boolean }
+
+export async function request(
+  options: RequestOptions,
+  browserOptions?: BrowserOptions
+): Promise<string>
+export async function request(
+  options: RequestOptions[],
+  browserOptions?: BrowserOptions
+): Promise<string[]>
 
 export async function request(
   options: RequestOptions | RequestOptions[],
-  { proxy, headless }: { proxy?: string; headless?: boolean } = {}
+  { proxy, headless }: BrowserOptions = {}
 ) {
   if (!browser) {
     browser = await pptr.launch({
