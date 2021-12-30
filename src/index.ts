@@ -3,6 +3,7 @@ import debug from 'debug'
 import pptr, { Browser, Page } from 'puppeteer-core'
 import { minify as minifyHTML } from 'html-minifier'
 import { findChrome } from './find-chrome'
+import { truthy } from './utils'
 
 const debugRequest = debug('taki:request')
 
@@ -12,7 +13,7 @@ export type ResourceFilterCtx = { url: string; type: string }
 
 export type { Page, Browser }
 
-export type TakiOptions = {
+export type RequestOptions = {
   url: string
   manually?: string | boolean
   wait?: string | number
@@ -25,7 +26,7 @@ export type TakiOptions = {
   blockCrossOrigin?: boolean
 }
 
-async function getHTML(browser: Browser, options: TakiOptions) {
+async function getHTML(browser: Browser, options: RequestOptions) {
   options.onBeforeRequest && options.onBeforeRequest(options.url)
   const page = await browser.newPage()
   await page.setRequestInterception(true)
@@ -108,14 +109,18 @@ async function getHTML(browser: Browser, options: TakiOptions) {
 
 let browser: Browser | undefined
 
-export async function request(options: TakiOptions): Promise<string>
-export async function request(options: TakiOptions[]): Promise<string[]>
+export async function request(options: RequestOptions): Promise<string>
+export async function request(options: RequestOptions[]): Promise<string[]>
 
-export async function request(options: TakiOptions | TakiOptions[]) {
+export async function request(
+  options: RequestOptions | RequestOptions[],
+  { proxy, headless }: { proxy?: string; headless?: boolean } = {}
+) {
   if (!browser) {
     browser = await pptr.launch({
       executablePath: findChrome(),
-      // headless: false,
+      args: [proxy && `--proxy-server=${proxy}`].filter(truthy),
+      headless,
     })
   }
 
