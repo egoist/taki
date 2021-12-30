@@ -10,6 +10,8 @@ const resourceTypeBlacklist = new Set(['stylesheet', 'image', 'media', 'font'])
 
 export type ResourceFilterCtx = { url: string; type: string }
 
+export type { Page, Browser }
+
 export type TakiOptions = {
   url: string
   manually?: string | boolean
@@ -79,7 +81,7 @@ async function getHTML(browser: Browser, options: TakiOptions) {
   if (options.manually) {
     result = await promise
   } else if (typeof options.wait === 'number') {
-    await page.waitFor(options.wait)
+    await page.waitForTimeout(options.wait)
   } else if (typeof options.wait === 'string') {
     await page.waitForSelector(options.wait)
   }
