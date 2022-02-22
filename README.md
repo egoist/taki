@@ -2,6 +2,12 @@
 
 [![NPM version](https://img.shields.io/npm/v/taki.svg?style=flat)](https://npmjs.com/package/taki) [![NPM downloads](https://img.shields.io/npm/dm/taki.svg?style=flat)](https://npmjs.com/package/taki) [![CircleCI](https://circleci.com/gh/egoist/taki/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/taki/tree/master) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate)
 
+## Sponsor
+
+<a href="https://oxylabs.io?utm_source=egoist&utm_medium=cpc&utm_campaign=egoist_github_sponsor&adgroupid=20220222">
+<img width="400" alt="Oxylabs: Innovative Proxy Service to Gather Data at Scale" src="https://user-images.githubusercontent.com/8784712/155142247-17264699-1bc8-4b52-8236-8b9ef7b365e2.png" />
+</a>
+
 ## Install
 
 ```bash
