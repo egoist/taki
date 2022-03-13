@@ -38,15 +38,18 @@ import { cleanup } from 'taki'
 cleanup()
 ```
 
-### Multiplate URLs
+### Custom html selector
+
+By default it returns the html for the entire document, but you can specify a selector to get the html for a specific element.
 
 ```js
-request([
-  { url: 'https://sao.js.org' },
-  { url: 'https://sao.js.org/#/create' },
-]).then((result) => {
-  // Then the result will an array of html string
-})
+const { request } = require('taki')
+
+request({ url: 'https://example.com', htmlSelector: '.some-element' }).then(
+  (html) => {
+    console.log(html)
+  }
+)
 ```
 
 ### Manually take snapshot

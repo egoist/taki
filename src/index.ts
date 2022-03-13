@@ -24,6 +24,10 @@ export type RequestOptions = {
   minify?: boolean
   resourceFilter?: (ctx: ResourceFilterCtx) => boolean
   blockCrossOrigin?: boolean
+  proxy?: string
+  headless?: boolean
+  sandbox?: boolean
+  htmlSelector?: string
 }
 
 async function getHTML(browser: Browser, options: RequestOptions) {
@@ -64,15 +68,17 @@ async function getHTML(browser: Browser, options: RequestOptions) {
     }
     return next()
   })
-  let resolveFunction: Function | undefined
+  let resolveResult: Function | undefined
   let content: string = ''
   type Result = { content: string }
-  const promise = new Promise<Result>((resolve) => (resolveFunction = resolve))
+  const resultPromise = new Promise<Result>(
+    (resolve) => (resolveResult = resolve)
+  )
   if (options.manually) {
     const functionName =
       typeof options.manually === 'string' ? options.manually : 'snapshot'
     await page.exposeFunction(functionName, (result: any) => {
-      resolveFunction!(result)
+      resolveResult!(result)
     })
   }
   await page.goto(options.url, {
@@ -80,13 +86,20 @@ async function getHTML(browser: Browser, options: RequestOptions) {
   })
   let result: Result | undefined
   if (options.manually) {
-    result = await promise
+    result = await resultPromise
   } else if (typeof options.wait === 'number') {
     await page.waitForTimeout(options.wait)
   } else if (typeof options.wait === 'string') {
     await page.waitForSelector(options.wait)
   }
-  content = result ? result.content : await page.content()
+  content = result
+    ? result.content
+    : options.htmlSelector
+    ? await page.evaluate(
+        (selector) => document.querySelector(selector).innerHTML,
+        [options.htmlSelector]
+      )
+    : await page.content()
   options.onBeforeClosingPage && (await options.onBeforeClosingPage(page))
   await page.close()
   options.onAfterRequest && options.onAfterRequest(options.url)
@@ -109,37 +122,25 @@ async function getHTML(browser: Browser, options: RequestOptions) {
 
 let browser: Browser | undefined
 
-export type BrowserOptions = { proxy?: string; headless?: boolean }
+export type BrowserOptions = {
+  proxy?: string
+  headless?: boolean
+  sandbox?: boolean
+}
 
-export async function request(
-  options: RequestOptions,
-  browserOptions?: BrowserOptions
-): Promise<string>
-export async function request(
-  options: RequestOptions[],
-  browserOptions?: BrowserOptions
-): Promise<string[]>
-
-export async function request(
-  options: RequestOptions | RequestOptions[],
-  { proxy, headless }: BrowserOptions = {}
-) {
+export async function request(options: RequestOptions) {
   if (!browser) {
     browser = await pptr.launch({
       executablePath: findChrome(),
-      args: [proxy && `--proxy-server=${proxy}`].filter(truthy),
-      headless,
+      args: [
+        options.proxy && `--proxy-server=${options.proxy}`,
+        options.sandbox === false && '--no-sandbox',
+      ].filter(truthy),
+      headless: options.headless,
     })
   }
 
-  try {
-    const result = Array.isArray(options)
-      ? await Promise.all(options.map((option) => getHTML(browser!, option)))
-      : await getHTML(browser, options)
-    return result
-  } catch (error) {
-    throw error
-  }
+  return getHTML(browser, options)
 }
 
 export async function cleanup() {
